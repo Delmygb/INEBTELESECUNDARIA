@@ -1,0 +1,24 @@
+package gt.edu.inebtls.tablet_access_control;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class inebtelesecundaria {
+    @GetMapping("api/saludo")
+    public String saludo() {
+
+        return "¡Bienvenido al Instituto Nacional de Educación Básica en Telescundaria!";
+
+    }
+@GetMapping("api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+
+        return "Hola, " + nombre + "! Gracias por visitar el instituto.";
+        
+
+    
+    }
+}
+

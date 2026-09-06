@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Ineb de Telesecundaria</title>
+</head>
+<body>
+    <h1>Ineb de Telesecundaria</h1>
+    <form id="formBienvenida">
+        <label for="nombre">Tu nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
+        <button type="submit">Enviar saludo</button>
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        document.getElementById('formBienvenida').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var nombre = document.getElementById('nombre').value;
+            fetch('/api/bienvenida?nombre=' + encodeURIComponent(nombre))
+                .then(function (respuesta) { return respuesta.text(); })
+                .then(function (texto) { document.getElementById('resultado').textContent = texto; });
+        });
+    </script>
+</body>
+</html>
