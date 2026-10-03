@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estudiantes inscritos</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}" />
+</head>
+<body>
+<main>
+  <h1>Estudiantes registrados</h1>
+  <p>Total registrados: <strong th:text="${total}">0</strong></p>
+  <p th:if="${total == 0}">Todavía no hay estudiantes registrados.</p>
+  <table th:if="${total > 0}">
+    <thead>
+      <tr>
+        <th>#</th><th>Nombre</th><th>Edad</th><th>Estado de la tablet</th><th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="estudiante,estado : ${estudiantes}">
+        <td th:text="${estado.count}">1</td>
+        <td th:text="${estudiante.nombre}">Nombre de ejemplo</td>
+        <td th:text="${estudiante.edad}">0</td>
+        <td th:text="${estudiante.estadodelatablet}">Estado</td>
+        <td><a th:href="@{/estudiantes/{n}(n=${estado.count})}">Ver</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><a th:href="@{/estudiantes/nuevo}">Registrar otro estudiante</a></p>
+</main>
+</body>
+</html>
