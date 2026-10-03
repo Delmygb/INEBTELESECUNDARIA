@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ocurrió un problema</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}" />
+</head>
+<body>
+<main>
+  <h1>INSTITUTO NACIONAL DE EDUCACIÓN BÁSICA DE TELESECUNDARIA</h1>
+  <div class="resumen-errores" role="alert">
+    <p><strong>No pudimos mostrar esta página.</strong></p>
+    <p>Es posible que la dirección esté mal escrita o que la página ya no exista.</p>
+    <p>Código del problema: <span th:text="${status}">404</span></p>
+  </div>
+  <p>
+    <a th:href="@{/estudiantes}">Ver la lista de estudiantes</a> ·
+    <a th:href="@{/estudiantes/nuevo}">Inscribir un estudiante</a>
+  </p>
+</main>
+</body>
+</html>
