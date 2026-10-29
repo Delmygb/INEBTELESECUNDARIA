@@ -1,41 +1,43 @@
 package gt.edu.inebtls.tablets_access_control.security;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
 import gt.edu.inebtls.tablets_access_control.model.Usuario;
 import gt.edu.inebtls.tablets_access_control.repository.UsuarioRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Component
-public class CargadorUsuarios implements CommandLineRunner {
+@Configuration
+public class CargadorUsuarios {
 
-    private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final String passwordAdmin;
-    private final String passwordEntrenador;
+    @Bean
+    CommandLineRunner inicializarUsuarios(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        return args -> {
+            String passwordAdmin = System.getenv("ADMIN_PASSWORD");
+            if (passwordAdmin == null) {
+                passwordAdmin = "ClaveAdmin123";
+            }
 
-    public CargadorUsuarios(UsuarioRepository usuarioRepository,
-                            PasswordEncoder passwordEncoder,
-                            @Value("${app.admin.password}") String passwordAdmin,
-                            @Value("${app.entrenador.password}") String passwordEntrenador) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.passwordAdmin = passwordAdmin;
-        this.passwordEntrenador = passwordEntrenador;
-    }
+            String passwordEntrenador = System.getenv("ENTRENADOR_PASSWORD");
+            if (passwordEntrenador == null) {
+                passwordEntrenador = "ClaveEntr123";
+            }
 
-    @Override
-    public void run(String... args) {
-        crearSiNoExiste("admin", passwordAdmin, "ADMIN");
-        crearSiNoExiste("entrenador", passwordEntrenador, "ENTRENADOR");
-    }
+            if (usuarioRepository.findByUsername("admin").isEmpty()) {
+                Usuario admin = new Usuario();
+                admin.setUsername("admin");
+                admin.setPassword(passwordEncoder.encode(passwordAdmin));
+                admin.setRol("ADMIN");
+                usuarioRepository.save(admin);
+            }
 
-    private void crearSiNoExiste(String username, String passwordPlano, String rol) {
-        if (usuarioRepository.findByUsername(username).isEmpty()) {
-            String hash = passwordEncoder.encode(passwordPlano);
-            usuarioRepository.save(new Usuario(username, hash, rol));
-        }
+            if (usuarioRepository.findByUsername("entrenador").isEmpty()) {
+                Usuario entrenador = new Usuario();
+                entrenador.setUsername("entrenador");
+                entrenador.setPassword(passwordEncoder.encode(passwordEntrenador));
+                entrenador.setRol("ENTRENADOR");
+                usuarioRepository.save(entrenador);
+            }
+        };
     }
 }

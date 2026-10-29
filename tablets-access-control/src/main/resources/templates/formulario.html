@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Registrar estudiante</title>
-    <link rel="stylesheet" th:href="@{/estilos.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inscribir Estudiante</title>
+    <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
 <body>
 <main>
     <h1>INSTITUTO NACIONAL DE EDUCACIÓN BÁSICA TELESECUNDARIA</h1>
-    <h2>Registrar un estudiante</h2>
+    <h2>Aldea Panabajal, San Juan Comalapa, Chimaltenango</h2>
+
+    <h3>Inscribir Estudiante</h3>
 
     <form th:action="@{/estudiantes}" th:object="${estudiante}" method="post">
-        
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" th:field="*{nombre}" required />
-
-        <label for="codigo">Código:</label>
-        <input type="text" id="codigo" th:field="*{codigo}" required />
-
-        <label for="anioEscolar">Año Escolar:</label>
-        <input type="number" id="anioEscolar" th:field="*{anioEscolar}" required />
-
-        <label for="tienetableta">
-            <input type="checkbox" id="tienetableta" th:field="*{tienetableta}" />
-            ¿Tiene tablet asignada?
-        </label>
-
-        <button type="submit">Guardar</button>
+        <div>
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" th:field="*{tienetableta}"> ¿Tiene tableta asignada?
+            </label>
+        </div>
+        <div style="margin-top: 20px;">
+            <button type="submit">Guardar Estudiante</button>
+        </div>
     </form>
 
-    <p><a th:href="@{/estudiantes}">Ver la lista de estudiantes</a></p>
+    <p style="margin-top: 20px;"><a th:href="@{/estudiantes}">Regresar a la lista</a></p>
 </main>
 </body>
 </html>

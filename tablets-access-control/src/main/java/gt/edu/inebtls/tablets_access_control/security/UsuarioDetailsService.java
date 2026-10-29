@@ -1,13 +1,12 @@
 package gt.edu.inebtls.tablets_access_control.security;
 
+import gt.edu.inebtls.tablets_access_control.model.Usuario;
+import gt.edu.inebtls.tablets_access_control.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import gt.edu.inebtls.tablets_access_control.model.Usuario;
-import gt.edu.inebtls.tablets_access_control.repository.UsuarioRepository;
 
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
@@ -23,7 +22,8 @@ public class UsuarioDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        return User.withUsername(usuario.getUsername())
+        return User.builder()
+                .username(usuario.getUsername())
                 .password(usuario.getPassword())
                 .roles(usuario.getRol())
                 .build();

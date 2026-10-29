@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" 
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <!-- 1. Agrega esto -->
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +10,9 @@
 </head>
 <body>
 <main>
-  <h1>Tablets Access & Control</h1>
+  <h1>INSTITUTO NACIONAL DE EDUCACIÓN BÁSICA TELESECUNDARIA</h1>
+  <h2>Aldea Panabajal, San Juan Comalapa, Chimaltenango</h2>
 
-  <!-- 2. Agrega esta barra de sesión arriba -->
   <div class="barra">
     <span>Sesión de: <strong sec:authentication="name">usuario</strong></span>
     <form th:action="@{/logout}" method="post" class="en-linea">
@@ -23,29 +23,22 @@
   <p>Total registrados: <strong th:text="${total}">0</strong></p>
   <p th:if="${total == 0}">Todavía no hay estudiantes registrados.</p>
 
-  <!-- 3. Enlace de registro solo para ADMIN -->
-  <p sec:authorize="hasRole('ADMIN')"><a th:href="@{/estudiantes/nuevo}">+ Registrar otro estudiante</a></p>
+  <p sec:authorize="hasRole('ADMIN')"><a th:href="@{/estudiantes/nuevo}">+ Inscribir estudiante</a></p>
 
-  <table border="1" th:if="${total > 0}">
+  <table th:if="${total > 0}">
     <thead>
       <tr>
-        <th>#</th>
         <th>Nombre</th>
-        <th>Código</th>
-        <th>Año Escolar</th>
-        <th>¿Tiene Tablet?</th>
-        <th sec:authorize="hasRole('ADMIN')">Acciones</th> <!-- Solo ADMIN ve la columna de acciones -->
+        <th>Tiene tableta en buen estado</th>
+        <th>Cambiar tableta</th>
+        <th sec:authorize="hasRole('ADMIN')">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr th:each="estudiante, estado : ${estudiantes}">
-        <td th:text="${estado.count}">1</td>
+      <tr th:each="estudiante : ${estudiantes}">
         <td th:text="${estudiante.nombre}">Nombre</td>
-        <td th:text="${estudiante.codigo}">Código</td>
-        <td th:text="${estudiante.anioEscolar}">2026</td>
         <td th:text="${estudiante.tienetableta ? 'Sí' : 'No'}">Sí</td>
-        
-        <!-- Celda de Editar y Eliminar solo para ADMIN -->
+        <td>-</td>
         <td sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/estudiantes/{id}/editar(id=${estudiante.id})}">Editar</a>
           <form th:action="@{/estudiantes/{id}/eliminar(id=${estudiante.id})}" method="post" class="en-linea">
