@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: tablets-access-control
+    env: docker
+    repo: https://github.com/Delmygb/INEBTELESECUNDARIA
+    branch: main
+    rootDirectory: tablets-access-control
+    dockerfilePath: Dockerfile
+    autoDeploy: true
