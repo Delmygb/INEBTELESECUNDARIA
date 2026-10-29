@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <title>Detalle del estudiante</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}" />
+</head>
+<body>
+<main>
+  <h1>Estudiante #<span th:text="${numero}">1</span></h1>
+  <p><strong>Nombre:</strong> <span th:text="${estudiante.nombre}">—</span></p>
+  <p><strong>Edad:</strong> <span th:text="${estudiante.edad}">—</span></p>
+  <p><strong>Estado de la tablet:</strong> <span th:text="${estudiante.estadodelatablet}">—</span></p>
+  <p><a th:href="@{/estudiantes}">Volver a la lista</a></p>
+</main>
+</body>
+</html>
