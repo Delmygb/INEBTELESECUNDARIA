@@ -61,6 +61,13 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
+        <!-- Pruebas de Spring Boot y JUnit -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- DevTools para recarga automática -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
