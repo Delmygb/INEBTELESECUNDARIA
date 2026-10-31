@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Ineb de Telesecundaria</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
     <h1>Ineb de Telesecundaria</h1>
@@ -14,12 +15,12 @@
     <p id="resultado"></p>
 
     <script>
-        document.getElementById('formBienvenida').addEventListener('submit', function (e) {
+        document.getElementById('formBienvenida').addEventListener('submit', function(e) {
             e.preventDefault();
             var nombre = document.getElementById('nombre').value;
             fetch('/api/bienvenida?nombre=' + encodeURIComponent(nombre))
-                .then(function (respuesta) { return respuesta.text(); })
-                .then(function (texto) { document.getElementById('resultado').textContent = texto; });
+                .then(function(respuesta) { return respuesta.text(); })
+                .then(function(texto) { document.getElementById('resultado').innerText = texto; });
         });
     </script>
 </body>
