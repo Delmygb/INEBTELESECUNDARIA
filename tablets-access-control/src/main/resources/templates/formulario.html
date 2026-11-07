@@ -11,19 +11,55 @@
     <h1>INSTITUTO NACIONAL DE EDUCACIÓN BÁSICA TELESECUNDARIA</h1>
     <h2>Aldea Panabajal, San Juan Comalapa, Chimaltenango</h2>
 
-    <h3>Inscribir Estudiante</h3>
+    <h3>Inscribir Estudiante y Asignar Tablet</h3>
 
     <form th:action="@{/estudiantes}" th:object="${estudiante}" method="post">
-        <div>
+        
+        <div class="form-group">
             <label for="nombre">Nombre completo:</label>
-            <input type="text" id="nombre" th:field="*{nombre}" required>
+            <input type="text" id="nombre" th:field="*{nombre}" required placeholder="Ej. Juan Pérez">
         </div>
-        <div>
-            <label>
-                <input type="checkbox" th:field="*{tienetableta}"> ¿Tiene tableta asignada?
-            </label>
+
+        <div class="form-group">
+            <label for="codigo">Código o CUI del estudiante:</label>
+            <input type="text" id="codigo" th:field="*{codigo}" required placeholder="Ej. 12345678">
         </div>
-        <div style="margin-top: 20px;">
+
+        <div class="form-group">
+            <label for="gradoSeccion">Grado y Sección:</label>
+            <input type="text" id="gradoSeccion" th:field="*{gradoSeccion}" required placeholder="Ej. 1ro Básico A">
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="tienetableta" th:field="*{tienetableta}">
+            <label for="tienetableta" style="margin-bottom:0;">¿Tiene tableta asignada?</label>
+        </div>
+
+        <div class="form-group">
+            <label for="numeroTableta">Número / Serie de Tableta:</label>
+            <input type="text" id="numeroTableta" th:field="*{numeroTableta}" placeholder="Ej. TAB-2026-001">
+        </div>
+
+        <div class="form-group">
+            <label for="estadoFisicoTableta">Estado de la Tableta:</label>
+            <select id="estadoFisicoTableta" th:field="*{estadoFisicoTableta}">
+                <option value="Funciona">Funciona</option>
+                <option value="No funciona">No funciona</option>
+                <option value="Deteriorado">Deteriorado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaEntrega">Fecha de Entrega:</label>
+            <input type="date" id="fechaEntrega" th:field="*{fechaEntrega}">
+        </div>
+
+        <div class="form-group">
+            <label for="anioEscolar">Año Escolar:</label>
+            <input type="number" id="anioEscolar" th:field="*{anioEscolar}" value="2026" required>
+        </div>
+
+        <div style="margin-top: 24px;">
             <button type="submit">Guardar Estudiante</button>
         </div>
     </form>

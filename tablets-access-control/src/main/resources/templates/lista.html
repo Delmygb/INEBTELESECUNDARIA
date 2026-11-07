@@ -23,24 +23,32 @@
   <p>Total registrados: <strong th:text="${total}">0</strong></p>
   <p th:if="${total == 0}">Todavía no hay estudiantes registrados.</p>
 
-  <p sec:authorize="hasRole('ADMIN')"><a th:href="@{/estudiantes/nuevo}">+ Inscribir estudiante</a></p>
+  <p sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/estudiantes/nuevo}" class="btn-azul" style="padding: 8px 16px; display: inline-block;">+ Inscribir estudiante</a>
+  </p>
 
   <table th:if="${total > 0}">
     <thead>
       <tr>
         <th>Nombre</th>
-        <th>Tiene tableta en buen estado</th>
-        <th>Cambiar tableta</th>
+        <th>Grado/Sección</th>
+        <th>¿Tiene Tableta?</th>
+        <th>No. Tableta</th>
+        <th>Estado Físico</th>
+        <th>Fecha Entrega</th>
         <th sec:authorize="hasRole('ADMIN')">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr th:each="estudiante : ${estudiantes}">
         <td th:text="${estudiante.nombre}">Nombre</td>
+        <td th:text="${estudiante.gradoSeccion != null ? estudiante.gradoSeccion : '-'}">Grado</td>
         <td th:text="${estudiante.tienetableta ? 'Sí' : 'No'}">Sí</td>
-        <td>-</td>
+        <td th:text="${estudiante.numeroTableta != null ? estudiante.numeroTableta : '-'}">-</td>
+        <td th:text="${estudiante.estadoFisicoTableta != null ? estudiante.estadoFisicoTableta : 'N/A'}">Funciona</td>
+        <td th:text="${estudiante.fechaEntrega != null ? estudiante.fechaEntrega : '-'}">-</td>
         <td sec:authorize="hasRole('ADMIN')">
-          <a th:href="@{/estudiantes/{id}/editar(id=${estudiante.id})}">Editar</a>
+          <a th:href="@{/estudiantes/{id}/editar(id=${estudiante.id})}" style="margin-right: 8px;">Editar</a>
           <form th:action="@{/estudiantes/{id}/eliminar(id=${estudiante.id})}" method="post" class="en-linea">
             <button type="submit" class="peligro">Eliminar</button>
           </form>

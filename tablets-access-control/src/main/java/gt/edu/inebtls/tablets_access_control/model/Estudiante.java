@@ -1,6 +1,7 @@
 package gt.edu.inebtls.tablets_access_control.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "estudiantes")
@@ -14,9 +15,15 @@ public class Estudiante {
     private String codigo;
     private Integer anioEscolar;
     
-    // Mantenemos ambas referencias para evitar cualquier conflicto con el repositorio
+    // Mantenemos sincronizados estadoTableta y tienetableta
     private boolean estadoTableta;
     private boolean tienetableta;
+
+    // Campos adicionados para el control completo de asignación de tablets
+    private String gradoSeccion;
+    private String numeroTableta;
+    private String estadoFisicoTableta; // "Funciona", "No funciona", "Deteriorado"
+    private LocalDate fechaEntrega;
 
     public Estudiante() {}
 
@@ -44,4 +51,16 @@ public class Estudiante {
         this.tienetableta = tienetableta; 
         this.estadoTableta = tienetableta;
     }
+
+    public String getGradoSeccion() { return gradoSeccion; }
+    public void setGradoSeccion(String gradoSeccion) { this.gradoSeccion = gradoSeccion; }
+
+    public String getNumeroTableta() { return numeroTableta; }
+    public void setNumeroTableta(String numeroTableta) { this.numeroTableta = numeroTableta; }
+
+    public String getEstadoFisicoTableta() { return estadoFisicoTableta; }
+    public void setEstadoFisicoTableta(String estadoFisicoTableta) { this.estadoFisicoTableta = estadoFisicoTableta; }
+
+    public LocalDate getFechaEntrega() { return fechaEntrega; }
+    public void setFechaEntrega(LocalDate fechaEntrega) { this.fechaEntrega = fechaEntrega; }
 }
