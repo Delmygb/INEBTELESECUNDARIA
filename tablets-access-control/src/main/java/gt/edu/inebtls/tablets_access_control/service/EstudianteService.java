@@ -1,46 +1,41 @@
 package gt.edu.inebtls.tablets_access_control.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import gt.edu.inebtls.tablets_access_control.model.Estudiante;
+import gt.edu.inebtls.tablets_access_control.repository.EstudianteRepository;
 
 @Service
 public class EstudianteService {
-    private final List<Estudiante> estudiantes = new ArrayList<>();
-    private Long contadorId = 1L; // Para asignar IDs automáticos
 
+    private final EstudianteRepository estudianteRepository;
+
+    public EstudianteService(EstudianteRepository estudianteRepository) {
+        this.estudianteRepository = estudianteRepository;
+    }
+
+    @Transactional
     public void guardar(Estudiante estudiante) {
-        if (estudiante.getId() == null) {
-            estudiante.setId(contadorId++);
-            estudiantes.add(estudiante);
-        } else {
-            // Si ya tiene ID, es una actualización (editar)
-            for (int i = 0; i < estudiantes.size(); i++) {
-                if (estudiantes.get(i).getId().equals(estudiante.getId())) {
-                    estudiantes.set(i, estudiante);
-                    break;
-                }
-            }
-        }
+        estudianteRepository.save(estudiante);
     }
 
     public List<Estudiante> listarTodos() {
-        return estudiantes;
+        return estudianteRepository.findAll();
     }
 
-    public int contar() {
-        return estudiantes.size();
+    public long contar() {
+        return estudianteRepository.count();
     }
 
     public Estudiante buscarPorId(Long id) {
-        return estudiantes.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        Optional<Estudiante> estudiante = estudianteRepository.findById(id);
+        return estudiante.orElse(null);
     }
 
+    @Transactional
     public void eliminar(Long id) {
-        estudiantes.removeIf(e -> e.getId().equals(id));
+        estudianteRepository.deleteById(id);
     }
 }
